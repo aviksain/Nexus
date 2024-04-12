@@ -20,15 +20,15 @@ const getAllVideos = asyncHandler(async (req, res) => {
   } = req.query;
   //TODO: get all videos based on query, sort, pagination
 
-  /*
-		Steps ->
-		1. check the userid 
-		2. Search the videos which match the title and description
-		3. show those videos which isPublished is true
+/*
+Steps ->
+    1. check the userid 
+    2. Search the videos which match the title and description
+    3. show those videos which isPublished is true
     4. get the ownerDetails of every video
     5. sort the videos based on the sortType
     6. Apply pagination by aggregatePaginate
-	*/
+*/
 
   if (!userId || !isValidObjectId(userId)) {
     throw new ApiError(400, "UserId must be a valid userid");
