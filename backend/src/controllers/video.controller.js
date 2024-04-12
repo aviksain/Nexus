@@ -47,11 +47,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
       },
       {
         $match: {
-          owner: new mongoose.Types.ObjectId(userId),
-        },
-      },
-      {
-        $match: {
           isPublished: true,
         },
       },
