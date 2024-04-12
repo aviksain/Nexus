@@ -1,7 +1,10 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import { uploadOnCloudinary, deleteFromCloudinary } from "../utils/cloudinary.js";
+import {
+  uploadOnCloudinary,
+  deleteFromCloudinary,
+} from "../utils/cloudinary.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -401,6 +404,36 @@ const getWatchHistory = asyncHandler(async (req, res) => {
   /*
     when we access _id through mongoose we get a string like this "661179c5f7a9ab95be51236f" but this not mongodb id, if we want mongodb objectid we have to do something like this new mongoose.Types.ObjectId(req.user._id)
   */
+
+  /*
+    So we will get the user object as 
+    user = [
+      {
+        username,
+        email,
+        fullname,
+        avatar,
+        coverImage,
+        watchHistory: [
+          videoFile,
+          thumbnail,
+          title,
+          description,
+          duration,
+          views,
+          isPublished,
+          owner: {
+            fullname,
+            username,
+            avatar,
+          }
+        ],
+        password,
+        refreshToken,
+      }
+    ]
+  */
+
   const user = await User.aggregate([
     {
       $match: {
@@ -408,13 +441,18 @@ const getWatchHistory = asyncHandler(async (req, res) => {
       },
     },
     {
+      /* MongoDB will match each element in the array with documents in the from collection (specified by foreignField). This means that for each input document, the $lookup stage will perform a match for each value in the array.
+       */
       $lookup: {
         from: "videos",
         localField: "watchHistory",
         foreignField: "_id",
-        as: "watchHistory",
+        as: "watchHistory", // will get the array
         pipeline: [
           {
+            /*
+              Extracting the owner details by the _id
+            */
             $lookup: {
               from: "users",
               localField: "owner",
@@ -433,6 +471,13 @@ const getWatchHistory = asyncHandler(async (req, res) => {
           },
           {
             $addFields: {
+              /*
+              in the previous stage we will get array of objects
+              so we overriding the owner field and returning as object
+              first we returing as owner[{}]
+              now we are returning as owner{}
+              so we can access it as owner.fullname
+              */
               owner: {
                 $first: "$owner",
               },
@@ -465,5 +510,5 @@ export {
   updateUserAvatar,
   updateUserCoverImage,
   getUserChannelProfile,
-  getWatchHistory
+  getWatchHistory,
 };
