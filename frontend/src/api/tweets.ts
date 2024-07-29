@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 import axiosInstance from "../utils/axiosInstance";
 
 const getUserTweetsAPI = async (userId: string) => {

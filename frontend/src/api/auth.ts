@@ -60,8 +60,6 @@ const logoutAPI = async () => {
   
 };
 
-const refreshToken = async () => {};
-
 const getcurrentUserAPI = async () => {
   try {
     const response = await axiosInstance.get('/users/current-user');
@@ -71,6 +69,5 @@ const getcurrentUserAPI = async () => {
   }
 };
 
-const getHistory = async () => {};
 
 export { registerAPI, loginAPI, logoutAPI, getcurrentUserAPI };

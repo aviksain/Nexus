@@ -26,7 +26,6 @@ import { getVideoCommentsAPI } from "../api/comment";
 
 function VideoPlayPage() {
   const video = useSelector((state: any) => state.video.video);
-  const userData = useSelector((state: any) => state.auth.userData);
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
   const dispatch = useDispatch();
