@@ -6,7 +6,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Video } from "../models/video.model.js";
 
 const getVideoComments = asyncHandler(async (req, res) => {
-  //TODO: get all comments for a video
   const { videoId } = req.params;
   const { page = 1, limit = 10 } = req.query;
 
@@ -14,7 +13,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid video Id");
   }
 
-  const comments = await Comment.aggregate([
+  const pipeline = [
     {
       $match: {
         video: new mongoose.Types.ObjectId(videoId),
@@ -71,20 +70,36 @@ const getVideoComments = asyncHandler(async (req, res) => {
         createdAt: -1,
       },
     },
-  ]);
+  ];
+
+  const comments = Comment.aggregate(pipeline);
+
+  /*
+    Note : we can also do the pagination like this without aggregatePaginate
+
+    const totalItems = comments.length;
+    const totalPages = Math.ceil(totalItems / limit);
+    const startIndex = (page - 1) * limit;
+    const paginatedComments = comments.slice(startIndex, startIndex + limit);
+
+    const response = {
+      totalItems,
+      totalPages,
+      currentPage: Number(page),
+      data: paginatedComments,
+    };
+  */
 
   const options = {
     page: parseInt(page, 10),
-    limit: parseInt(limit, 10),
+    limit: parseInt(limit, 10)
   };
 
+  
   const commentPaginate = await Comment.aggregatePaginate(comments, options);
-
   return res
     .status(200)
-    .json(
-      new ApiResponse(200, commentPaginate, "Comments fetched successfully")
-    );
+    .json(new ApiResponse(200, commentPaginate, "Comments fetched successfully"));
 });
 
 const addComment = asyncHandler(async (req, res) => {
@@ -99,7 +114,7 @@ const addComment = asyncHandler(async (req, res) => {
 
   const video = await Video.findById(videoId);
 
-  if (!videoId) {
+  if (!video) {
     throw new ApiError(404, "Video not found");
   }
 
@@ -108,8 +123,8 @@ const addComment = asyncHandler(async (req, res) => {
   }
 
   const comment = await Comment.create({
-    content,
-    videoId,
+    content: content,
+    video: videoId,
     owner: req.user?._id,
   });
 
@@ -117,9 +132,23 @@ const addComment = asyncHandler(async (req, res) => {
     throw new ApiError(403, "Falied to create comment");
   }
 
+  const response = {
+    _id: comment._id,
+    content: comment.content,
+    video: videoId,
+    owner: {
+      _id: req.user?._id,
+      avatar: req.user?.avatar,
+      fullname: req.user?.fullname,
+      username: req.user?.username
+    },
+    "createdAt": comment.createdAt,
+    "updatedAt": comment.updatedAt,
+  }
+
   return res
     .status(200)
-    .json(new ApiResponse(200, comment, "Comment Created successfully"));
+    .json(new ApiResponse(200, response, "Comment Created successfully"));
 });
 
 const updateComment = asyncHandler(async (req, res) => {
@@ -162,9 +191,23 @@ const updateComment = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Falied to update comment");
   }
 
+  const response = {
+    _id: updatedComment._id,
+    content: updatedComment.content,
+    video: updatedComment.video,
+    owner: {
+      _id: req.user?._id,
+      avatar: req.user?.avatar,
+      fullname: req.user?.fullname,
+      username: req.user?.username
+    },
+    "createdAt": updatedComment.createdAt,
+    "updatedAt": updatedComment.updatedAt,
+  }
+
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedComment, "Comment updated successfully"));
+    .json(new ApiResponse(200, response, "Comment updated successfully"));
 });
 
 const deleteComment = asyncHandler(async (req, res) => {

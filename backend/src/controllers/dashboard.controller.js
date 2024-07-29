@@ -61,10 +61,10 @@ const getChannelStats = asyncHandler(async (req, res) => {
     new ApiResponse(
       200,
       {
-        totalViews: totalViews[0].totalViews,
-        totalVideos: totalVideos[0].totalVideos,
+        totalViews: totalViews[0]?.totalViews || 0,
+        totalVideos: totalVideos[0]?.totalVideos || 0,
         totalSubscribers,
-        totalLikes: totalLikes[0].totalLikes,
+        totalLikes: totalLikes[0]?.totalLikes || 0,
       },
       "Channel Stats fetched successfully"
     )
@@ -109,11 +109,7 @@ const getChannelVideos = asyncHandler(async (req, res) => {
         duration: 1,
         views: 1,
         isPublished: 1,
-        createdAt: {
-          year: { $year: "$createdAt" },
-          month: { $month: "$createdAt" },
-          day: { $dayOfMonth: "$createdAt" }
-        },
+        createdAt: 1,
         likes: 1
       }
     },

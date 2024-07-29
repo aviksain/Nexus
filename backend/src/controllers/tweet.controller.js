@@ -14,7 +14,7 @@ const createTweet = asyncHandler(async (req, res) => {
 
   const { content } = req.body;
 
-  if (content.trim() === "") {
+  if (!content || content.trim() === "") {
     throw new ApiError(400, "Content is required");
   }
 
@@ -27,9 +27,22 @@ const createTweet = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Failed to create tweet");
   }
 
+  const responseData = {
+    "_id": tweet._id,
+    "owner": {
+      "_id": req.user?._id,
+      "fullname": req.user.fullname,
+      "avatar": req.user.avatar
+    },
+    "content": tweet.content,
+    "updatedAt": tweet.updatedAt,
+    "likesCnt": 0,
+    "isLiked": false,
+  }
+
   return res
     .status(200)
-    .json(new ApiResponse(200, tweet, "tweet created successfully"));
+    .json(new ApiResponse(200, responseData, "tweet created successfully"));
 });
 
 const getUserTweets = asyncHandler(async (req, res) => {
@@ -96,14 +109,14 @@ const getUserTweets = asyncHandler(async (req, res) => {
       $project: {
         owner: 1,
         content: 1,
-        createdAt: 1,
+        updatedAt: 1,
         likesCnt: 1,
         isLiked: 1,
       },
     },
     {
       $sort: {
-        createdAt: -1,
+        updatedAt: -1,
       },
     },
   ]);
@@ -157,9 +170,22 @@ const updateTweet = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Falied to update tweet");
   }
 
+  const responseData = {
+    "_id": updatedTweet._id,
+    "owner": {
+      "_id": req.user?._id,
+      "fullname": req.user.fullname,
+      "avatar": req.user.avatar
+    },
+    "content": updatedTweet.content,
+    "updatedAt": updatedTweet.updatedAt,
+    "likesCnt": updatedTweet.likesCnt,
+    "isLiked": updatedTweet.isLiked
+  }
+
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedTweet, "tweets updated successfully"));
+    .json(new ApiResponse(200, responseData, "tweets updated successfully"));
 });
 
 const deleteTweet = asyncHandler(async (req, res) => {

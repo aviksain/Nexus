@@ -248,17 +248,26 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const updateAccountDetails = asyncHandler(async (req, res) => {
   const { fullname, email } = req.body;
 
-  if (!fullname || !email) {
-    throw new ApiError(400, "All fields are required");
+  if (!fullname && !email) {
+    throw new ApiError(400, "Fullname or Email is required");
   }
+  
+  let existUserWithEmail=false;
+
+  if(email) existUserWithEmail = await User.findOne({email});
+
+  if (existUserWithEmail) {
+    throw new ApiError(409, "User with this email already exists");
+  }
+
+  const updatedFields = {};
+  if (fullname) updatedFields.fullname = fullname;
+  if (email) updatedFields.email = email;
 
   const user = await User.findByIdAndUpdate(
     req.user?._id,
     {
-      $set: {
-        fullname,
-        email: email,
-      },
+      $set: updatedFields,
     },
     { new: true }
   ).select("-password");

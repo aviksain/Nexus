@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Ga+Maamli&family=Kalam:wght@300;400;700&family=Kalnia+Glaze:wdth,wght@100..125,100..700&family=Satisfy&display=swap');
+
+.logo-text {
+  font-family: "Ga Maamli", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Define the breathing animation */
+@keyframes breathe {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply the breathing animation on hover */
+.breathing:hover {
+  animation: breathe 2s ease-in-out infinite;
+}
