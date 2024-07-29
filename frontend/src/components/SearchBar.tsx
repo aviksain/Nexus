@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SearchBar() {

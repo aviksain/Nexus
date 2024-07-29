@@ -76,6 +76,5 @@ const updateCoverImageAPI = async (file: File) => {
   }
 };
 
-const getChannelInfo = async () => {};
 
 export { getUserChannelProfileAPI, updateCoverImageAPI, updateAvatarAPI,updateAccountAPI, changePasswordAPI};

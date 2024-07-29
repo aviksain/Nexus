@@ -3,7 +3,6 @@ import { deleteVideoAPI } from "../api/videos";
 import toast from "react-hot-toast";
 import ProcessingVideoPopup from "./ProcessingVideoPopup";
 import { useDispatch } from "react-redux";
-import { deleteAVideo } from "../redux/slices/videosSlice";
 import { Trash, X } from "lucide-react";
 import { deleteChannelVideo } from "../redux/slices/dashboardSlice";
 

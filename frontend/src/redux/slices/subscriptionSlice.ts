@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
-  subscribedChannelsType,
   subscribersChannelsType,
 } from "../../Types/dashboard";
 import toast from "react-hot-toast";

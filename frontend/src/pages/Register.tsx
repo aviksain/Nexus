@@ -1,11 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, CheckBox, Input, InputImage } from "../components/index";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { registerAPI } from "../api/auth";
 import { NavbarContainer } from ".";
-import confetti from "canvas-confetti";
 import { saveUserData } from "../redux/slices/authSlice";
 import { createConfetti } from "../utils/confetti";
 import { LoaderCircle } from "lucide-react";

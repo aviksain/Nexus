@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getAllVideosAPI } from "../../api/videos";
-import { useSelector } from "react-redux";
 import { formatDuration, timeAgo } from "../../utils/calculateTime";
 import { Link } from "react-router-dom";
 

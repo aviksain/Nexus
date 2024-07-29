@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getAllVideosAPI } from "../api/videos";
 import { Body, LoadingComp, SideBar, HomeVideos } from "../components";
 import { NavbarContainer } from ".";

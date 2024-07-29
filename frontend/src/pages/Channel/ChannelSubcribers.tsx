@@ -44,7 +44,7 @@ function ChannelSubcribers() {
   const toggleSubscription = async (channelId: string) => {
     try {
       const res = await toggleSubscriptionAPI(channelId);
-      dispatch(toggleSubscriptionRedux(channelId));
+      if(res) dispatch(toggleSubscriptionRedux(channelId));
     } catch (error) {
       console.log(error);
     }

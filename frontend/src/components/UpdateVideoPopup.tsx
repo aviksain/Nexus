@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { deleteVideoAPI } from "../api/videos";
 import toast from "react-hot-toast";
 import ProcessingVideoPopup from "./ProcessingVideoPopup";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAVideo } from "../redux/slices/videosSlice";
 import { X } from "lucide-react";
 import { deleteChannelVideo, insertAVideo } from "../redux/slices/dashboardSlice";
 import { channelVideosType } from "../Types/dashboard";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Input, InputImage } from ".";
 import { updateVideoAPI } from "../api/dashboard";
@@ -24,7 +21,6 @@ function UpdateVideoPopup({ id, show, setShow }: any) {
     return null;
   }
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 

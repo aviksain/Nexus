@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import {UploadVideoPopUp} from "../index";
 import { useSelector } from "react-redux";
 

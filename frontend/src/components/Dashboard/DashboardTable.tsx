@@ -1,9 +1,7 @@
 import { Pencil, Trash2 } from "lucide-react";
 import { useSelector } from "react-redux";
-import { togglePublishAPI } from "../../api/dashboard.ts";
 import { channelVideosType } from "../../Types/dashboard";
 import { ToggleButton, UpdateVideoPopup } from "../index.ts";
-import { deleteVideoAPI } from "../../api/videos.ts";
 import DeleteVideoPopup from "../DeleteVideoPopup.tsx";
 import { useState } from "react";
 import { timeAgo } from "../../utils/calculateTime.ts";

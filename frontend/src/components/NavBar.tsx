@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Input, Button } from "./index.ts";
+import { Button } from "./index.ts";
 import { Link } from "react-router-dom";
 import {
   LogOut,

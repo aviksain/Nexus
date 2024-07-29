@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, CheckBox, Input } from "../components/index";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveUserData } from "../redux/slices/authSlice";
 import { loginAPI } from "../api/auth";
 import {NavbarContainer} from ".";

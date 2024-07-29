@@ -7,7 +7,6 @@ import {
   UserCheck,
   UserPlus,
 } from "lucide-react";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { toggleSubscriptionAPI } from "../../api/subscriptions";
 import toast from "react-hot-toast";

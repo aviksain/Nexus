@@ -23,7 +23,6 @@ import {
   reset as resetVideoComments,
 } from "../redux/slices/commentSlice";
 import { getVideoCommentsAPI } from "../api/comment";
-import { getSubscriberChannelsAPI } from "../api/subscriptions";
 
 function VideoPlayPage() {
   const video = useSelector((state: any) => state.video.video);

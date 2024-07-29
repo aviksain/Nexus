@@ -1,6 +1,6 @@
 import { Upload } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import { Controller, Control } from "react-hook-form";
+import { Controller } from "react-hook-form";
 import ReactPlayer from "react-player";
 
 interface InputImageProps {

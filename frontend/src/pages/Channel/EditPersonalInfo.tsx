@@ -19,7 +19,6 @@ function EditPersonalInfo() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
     setValue,
   } = useForm<FormData>({
     defaultValues: {

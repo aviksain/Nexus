@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Button, InputFiles, InputImage } from "./index";
+import { Button, InputImage } from "./index";
 import { publishVideoAPI } from "../api/videos";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { insertAVideo } from "../redux/slices/dashboardSlice";
 import { ProcessingVideoPopup } from "./index";
 import toast from "react-hot-toast";
-import { channelVideosType } from "../Types/dashboard";
 import { createConfetti } from "../utils/confetti";
 
 type data = {
