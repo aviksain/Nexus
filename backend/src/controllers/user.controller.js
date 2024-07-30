@@ -13,6 +13,7 @@ import mongoose from "mongoose";
 const options = {
   httpOnly: true,
   secure: true,
+  sameSite: 'None'
 };
 
 const generateAccessAndRefereshTokens = async (userId) => {
