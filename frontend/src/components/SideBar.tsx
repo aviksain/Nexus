@@ -54,7 +54,7 @@ const SideBar = () => {
         </li>
         <li key="6" className="">
           <SideBarButtons
-            name="Subscribers"
+            name="Subscribed"
             logo={<UserCheck />}
             route="/subscribed-channels"
           />

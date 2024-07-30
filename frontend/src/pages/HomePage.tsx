@@ -3,7 +3,11 @@ import { getAllVideosAPI } from "../api/videos";
 import { Body, LoadingComp, SideBar, HomeVideos } from "../components";
 import { NavbarContainer } from ".";
 import { useDispatch } from "react-redux";
-import { deleteAllVideos, updateVideos } from "../redux/slices/videosSlice";
+import {
+  deleteAllVideos,
+  updateVideos,
+  reset as resetReduxVideos,
+} from "../redux/slices/videosSlice";
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -46,6 +50,12 @@ function HomePage() {
     window.addEventListener("scroll", handleInfiniteScroll);
     return () => window.removeEventListener("scroll", handleInfiniteScroll);
   }, [handleInfiniteScroll]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetReduxVideos());
+    };
+  }, [dispatch]);
 
   return (
     <NavbarContainer>

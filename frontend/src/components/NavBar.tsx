@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./index.ts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   LogOut,
   Menu,
@@ -12,9 +12,24 @@ import {
 } from "lucide-react";
 import Logo from "../LoGo/Logo.tsx";
 import SearchBar from "./SearchBar.tsx";
+import { logoutAPI } from "../api/auth.ts";
+import { deleteUserData } from "../redux/slices/authSlice.ts";
+import SearchPopUp from "./SearchPopUp.tsx";
+import { useState } from "react";
+import { RootState } from "../redux/store.ts";
 
 function Header() {
-  const userData = useSelector((state: any) => state.auth.userData);
+  const userData = useSelector((state: RootState) => state.auth.userData);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutUser = async () => {
+    await logoutAPI().then(() => {
+      dispatch(deleteUserData());
+    });
+  };
+
+  const [show, setShow] = useState(false);
+
   return (
     <>
       <header className="sticky inset-x-0 top-0 z-50 w-full border-b border-white bg-[#121212] px-4">
@@ -24,10 +39,10 @@ function Header() {
               <Logo />
             </Link>
           </div>
-          <div className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block">
+          <button className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block" >
             <SearchBar/>
-          </div>
-          <button className="ml-auto sm:hidden">
+          </button>
+          <button className="ml-auto sm:hidden" onClick={() => setShow(!show)}>
             <Search />
           </button>
           <button className="group peer ml-4 flex w-6 shrink-0 flex-wrap gap-y-1.5 sm:hidden">
@@ -44,7 +59,7 @@ function Header() {
             </div>
             <ul className="my-4 flex w-full flex-wrap gap-2 px-4 sm:hidden">
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black">
+                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate('/liked-videos')}>
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <ThumbsUp />
                   </span>
@@ -52,7 +67,7 @@ function Header() {
                 </button>
               </li>
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black">
+                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate(`/channel/${userData.username}`)}>
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <Video />
                   </span>
@@ -60,7 +75,7 @@ function Header() {
                 </button>
               </li>
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black">
+                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate('/settings')}>
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <Settings />
                   </span>
@@ -68,7 +83,7 @@ function Header() {
                 </button>
               </li>
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black">
+                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={logoutUser}>
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <LogOut />
                   </span>
@@ -105,6 +120,7 @@ function Header() {
           </div>
         </nav>
       </header>
+      <SearchPopUp show={show} setShow={setShow}/>
     </>
   );
 }
