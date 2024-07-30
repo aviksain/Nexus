@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { Video } from "../models/video.model.js";
+import { Like } from "../models/like.model.js";
 
 const getVideoComments = asyncHandler(async (req, res) => {
   const { videoId } = req.params;
@@ -191,6 +192,10 @@ const updateComment = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Falied to update comment");
   }
 
+  const likes = await Like.find({comment: commentId});
+  const userLike = await Like.findOne({ likedBy: req.user?._id, comment: commentId });
+  const isLiked = Boolean(userLike);
+
   const response = {
     _id: updatedComment._id,
     content: updatedComment.content,
@@ -201,6 +206,8 @@ const updateComment = asyncHandler(async (req, res) => {
       fullname: req.user?.fullname,
       username: req.user?.username
     },
+    likes: likes.length,
+    isLiked,
     "createdAt": updatedComment.createdAt,
     "updatedAt": updatedComment.updatedAt,
   }

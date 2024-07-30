@@ -89,6 +89,7 @@ function UpdateVideoPopup({ id, show, setShow }: any) {
                 src={currVideoDetails.thumbnail}
                 control={control}
                 accept="image/*," name="thumbnail"
+                req={false}
               />
               {errors.thumbnail && (
                 <span className="text-red-500">{errors.thumbnail.message}</span>

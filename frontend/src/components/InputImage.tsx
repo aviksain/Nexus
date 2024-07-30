@@ -17,6 +17,7 @@ const InputImage: React.FC<InputImageProps> = ({
   src,
   name,
   errors,
+  req=true,
   ...props
 }) => {
   const [currFile, setCurrFile] = useState<string | null>(src || null);
@@ -60,7 +61,7 @@ const InputImage: React.FC<InputImageProps> = ({
                   const files = handlePreview(e);
                   if (files) onChange(files);
                 }}
-                required
+                required={req}
               />
               <label
                 htmlFor={name}

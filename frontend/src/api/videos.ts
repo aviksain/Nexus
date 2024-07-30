@@ -9,22 +9,28 @@ const getAllVideosAPI = async ({
   limit,
 }: any) => {
   try {
+    const params: any = {
+      page,
+      limit,
+      sortBy,
+      sortType,
+      userId,
+      query
+    };
+
+    Object.keys(params).forEach(key => params[key] === undefined || params[key] === null ? delete params[key] : {});
+
     const response = await axiosInstance.get("/videos/", {
-      params: {
-        page,
-        limit,
-        query,
-        sortBy,
-        sortType,
-        userId,
-      },
+      params,
     });
+
     return response.data.data.docs;
   } catch (error) {
     console.error("Error fetching videos:", error);
     throw error;
   }
 };
+
 
 const getVideoByIdAPI = async (id: string) => {
   try {

@@ -9,11 +9,11 @@ function HomeVideos() {
       {videos.length > 0 ? (
         <VideoListingContainer>
           {videos.map((data: any) => (
-            <VideoCard data={data} />
+            <VideoCard key={data._id} data={data} />
           ))}
         </VideoListingContainer>
       ) : (
-        <EmptyPage name="liked videos" logo={<Play />} />
+        <EmptyPage name="videos" logo={<Play />} />
       )}
     </>
   );

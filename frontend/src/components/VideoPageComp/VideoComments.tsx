@@ -1,7 +1,7 @@
-import { Heart, Pencil, Save, Smile, Trash2 } from "lucide-react";
+import { Heart, MessageCircle, Pencil, Save, Smile, Trash2 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Input } from "..";
-import { useState } from "react";
+import { Button, EmptyPage, Input } from "..";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { commentType } from "../../Types/dashboard";
 import { timeAgo } from "../../utils/calculateTime";
@@ -17,6 +17,7 @@ import {
   toggleLike as toggleLikeRedux,
 } from "../../redux/slices/commentSlice";
 import { toggleCommentLikeAPI } from "../../api/like";
+import { reset as resetComments } from "../../redux/slices/commentSlice";
 
 function VideoComments() {
   const comments = useSelector((state: any) => state.comment.videoComments);
@@ -82,6 +83,12 @@ function VideoComments() {
     }
   } 
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetComments());
+    };
+  }, [dispatch]);
+  
   return (
     <>
       <button className="peer w-full rounded-lg border p-4 text-left duration-200 hover:bg-white/5 focus:bg-white/5 sm:hidden">
@@ -204,7 +211,7 @@ function VideoComments() {
               })}
             </>
           ) : (
-            <div className="text-white text-4xl">No tweets done so far</div>
+            <EmptyPage name="comment" logo={<MessageCircle />}/>
           )}
         </div>
       </div>

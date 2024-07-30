@@ -13,7 +13,7 @@ function ChannelVideos() {
       {videos.length > 0 ? (
         <VideoListingContainer>
           {videos.map((data: any) => (
-            <VideoCard data={data} />
+            <VideoCard key={data._id} data={data} />
           ))}
         </VideoListingContainer>
       ) : (

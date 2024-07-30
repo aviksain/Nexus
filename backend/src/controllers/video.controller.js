@@ -83,8 +83,6 @@ const getAllVideos = asyncHandler(async (req, res) => {
       [sortBy]: sortType === "asc" ? 1 : -1,
     };
 
-
-
     const pipeline = [
       {
         $match: {
@@ -384,8 +382,11 @@ const getVideoById = asyncHandler(async (req, res) => {
   const watchHistory = req.user?.watchHistory;
 
   let newView = video.views;
-  if(!watchHistory.includes(videoId)) {
+  if (!watchHistory.includes(videoId)) {
     newView = video.views + 1;
+    await User.findByIdAndUpdate(req.user?._id, {
+      $addToSet: { watchHistory: videoId },
+    });
   }
 
   await Video.findByIdAndUpdate(video._id, {

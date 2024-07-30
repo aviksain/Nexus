@@ -48,7 +48,7 @@ function Register() {
       console.log(response);
       if (response) {
         createConfetti();
-        navigate("/");
+        navigate("/login");
       }
     } catch (error: any) {
       console.error(
