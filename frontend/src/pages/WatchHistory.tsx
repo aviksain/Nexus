@@ -5,7 +5,7 @@ import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { getwatchHistoryAPI } from "../api/history";
 import { formatDuration, timeAgo } from "../utils/calculateTime";
-import LoadingComp from "../components/LoadingComp"; // Ensure this is the correct path
+import LoadingComp from "../components/LoadingComp"; 
 import { Link } from "react-router-dom";
 import { History } from "lucide-react";
 
@@ -109,7 +109,9 @@ function WatchHistory() {
                         </p>
                       </div>
                       <p className="mt-2 hidden text-sm md:block">
-                        {it.description}
+                        {it.description.length > 193
+                          ? it.description.substr(0, 190) + "..."
+                          : it.description}
                       </p>
                     </div>
                   </div>

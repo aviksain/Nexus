@@ -60,17 +60,19 @@ const SideBar = () => {
           />
         </li>
         <li key="7" className="hidden sm:block mt-auto">
-          <button
-            onClick={logoutUser}
-            className={` text-white border-white focus:text-[#ae7aff] sm:hover:bg-[#ae7aff] sm:hover:text-black sm:focus:border-[#ae7aff] sm:focus:bg-[#ae7aff] sm:focus:text-black flex flex-col items-center justify-center  py-1  sm:w-full sm:flex-row sm:border sm:p-1.5  sm:group-hover:justify-start sm:group-hover:px-4 lg:justify-start lg:px-4`}
-          >
-            <span className="inline-block w-5 shrink-0 sm:group-hover:mr-4 lg:mr-4">
-              <LogOut />
-            </span>
-            <span className="block sm:hidden sm:group-hover:inline lg:inline">
-              Logout
-            </span>
-          </button>
+          {userData && (
+            <button
+              onClick={logoutUser}
+              className={` text-white border-white focus:text-[#ae7aff] sm:hover:bg-[#ae7aff] sm:hover:text-black sm:focus:border-[#ae7aff] sm:focus:bg-[#ae7aff] sm:focus:text-black flex flex-col items-center justify-center  py-1  sm:w-full sm:flex-row sm:border sm:p-1.5  sm:group-hover:justify-start sm:group-hover:px-4 lg:justify-start lg:px-4`}
+            >
+              <span className="inline-block w-5 shrink-0 sm:group-hover:mr-4 lg:mr-4">
+                <LogOut />
+              </span>
+              <span className="block sm:hidden sm:group-hover:inline lg:inline">
+                Logout
+              </span>
+            </button>
+          )}
         </li>
         <li key="8" className="hidden sm:block">
           <SideBarButtons
