@@ -40,6 +40,4 @@ A video player application where users can post, update, and delete videos, subs
 - **nodemon**: For auto-reloading during development.
 - **mongoose-aggregate-paginate-v2**: For aggregation and pagination.
 
-### Note
-- The backend part is deployed on Render for free give it some time while lunching the app for first time Think you 🙂🙂🙂
 
