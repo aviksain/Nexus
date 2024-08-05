@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { updateAccountAPI } from "../../api/channel";
 import toast from "react-hot-toast";
 import { updateemail, updatefullname } from "../../redux/slices/channelSlice";
+import { saveUserData } from "../../redux/slices/authSlice";
 
 type FormData = {
   fullname: string;
@@ -32,6 +33,7 @@ function EditPersonalInfo() {
       const res = await updateAccountAPI(data);
       dispatch(updatefullname(res.fullname));
       dispatch(updateemail(res.email));
+      dispatch(saveUserData(res));
       if (res) toast.success("Account Details Updated");
     } catch (error: any) {
       toast.error(error.message);

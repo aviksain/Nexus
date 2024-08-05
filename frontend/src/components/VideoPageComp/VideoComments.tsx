@@ -98,7 +98,7 @@ function VideoComments() {
         <div className="block">
           <textarea
             className="mb-2 h-10 w-full resize-none border-none bg-transparent px-3 pt-2 outline-none"
-            placeholder="Write a tweet"
+            placeholder="Write a comment"
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
           ></textarea>

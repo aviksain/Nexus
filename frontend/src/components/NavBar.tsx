@@ -39,8 +39,8 @@ function Header() {
               <Logo />
             </Link>
           </div>
-          <button className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block" >
-            <SearchBar/>
+          <button className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block">
+            <SearchBar />
           </button>
           <button className="ml-auto sm:hidden" onClick={() => setShow(!show)}>
             <Search />
@@ -59,7 +59,10 @@ function Header() {
             </div>
             <ul className="my-4 flex w-full flex-wrap gap-2 px-4 sm:hidden">
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate('/liked-videos')}>
+                <button
+                  className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black"
+                  onClick={() => navigate("/liked-videos")}
+                >
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <ThumbsUp />
                   </span>
@@ -67,7 +70,10 @@ function Header() {
                 </button>
               </li>
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate(`/channel/${userData.username}`)}>
+                <button
+                  className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black"
+                  onClick={() => navigate(`/channel/${userData.username}`)}
+                >
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <Video />
                   </span>
@@ -75,21 +81,29 @@ function Header() {
                 </button>
               </li>
               <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={() => navigate('/settings')}>
+                <button
+                  className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black"
+                  onClick={() => navigate("/settings")}
+                >
                   <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
                     <Settings />
                   </span>
                   <span>Settings</span>
                 </button>
               </li>
-              <li className="w-full">
-                <button className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black" onClick={logoutUser}>
-                  <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
-                    <LogOut />
-                  </span>
-                  <span>Logout</span>
-                </button>
-              </li>
+              {userData && (
+                <li className="w-full">
+                  <button
+                    className="flex w-full items-center justify-start gap-x-4 border border-white px-4 py-1.5 text-left hover:bg-[#ae7aff] hover:text-black focus:border-[#ae7aff] focus:bg-[#ae7aff] focus:text-black"
+                    onClick={logoutUser}
+                  >
+                    <span className="inline-block w-full max-w-[20px] group-hover:mr-4 lg:mr-4">
+                      <LogOut />
+                    </span>
+                    <span>Logout</span>
+                  </button>
+                </li>
+              )}
             </ul>
             <div className="w-full">
               {userData ? (
@@ -120,7 +134,7 @@ function Header() {
           </div>
         </nav>
       </header>
-      <SearchPopUp show={show} setShow={setShow}/>
+      <SearchPopUp show={show} setShow={setShow} />
     </>
   );
 }

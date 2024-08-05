@@ -12,7 +12,10 @@ const getUserChannelProfileAPI = async (username: string) => {
 
 const updateAccountAPI = async (data:any) => {
   try {
-    const response = await axiosInstance.patch('/users/update-account',data);
+    const response = await axiosInstance.patch('/users/update-account', {
+      fullname: data.fullname,
+      email: data.email
+    });
     return response.data.data;
   } catch (error:any) {
     toast.error(error.message);
