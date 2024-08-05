@@ -13,7 +13,7 @@ import mongoose from "mongoose";
 const options = {
   httpOnly: true,
   secure: true,
-  sameSite: 'None'
+  sameSite: "None",
 };
 
 const generateAccessAndRefereshTokens = async (userId) => {
@@ -93,8 +93,14 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while registering the user");
   }
 
+  const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
+    createdUser._id
+  );
+  
   return res
     .status(201)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
     .json(new ApiResponse(200, createdUser, "User registered Successfully"));
 });
 
@@ -252,12 +258,17 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
   if (!fullname && !email) {
     throw new ApiError(400, "Fullname or Email is required");
   }
-  
-  let existUserWithEmail=false;
 
-  if(email) existUserWithEmail = await User.findOne({email});
+  let existUserWithEmail = null;
 
-  if (existUserWithEmail) {
+  if (email) {
+    existUserWithEmail = await User.findOne({ email });
+  }
+
+  if (
+    existUserWithEmail &&
+    existUserWithEmail.username !== req.user?.username
+  ) {
     throw new ApiError(409, "User with this email already exists");
   }
 
@@ -271,7 +282,11 @@ const updateAccountDetails = asyncHandler(async (req, res) => {
       $set: updatedFields,
     },
     { new: true }
-  ).select("-password");
+  ).select("-password -refreshToken");
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
 
   return res
     .status(200)
