@@ -15,9 +15,7 @@ import {
   reset as channelReset,
   toggleSubscription,
   updateUser,
-  updateVideos,
 } from "../redux/slices/channelSlice";
-import { getAllVideosAPI } from "../api/videos";
 
 
 function ChannelPage() {
@@ -25,17 +23,13 @@ function ChannelPage() {
   const { username } = useParams();
   const userData = useSelector((state: any) => state.auth.userData);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [channelOwnerId, setChannelOwnerId] = useState("");
 
-  const handleInfiniteScroll = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop + 1 >=
-      document.documentElement.scrollHeight
-    ) {
-      setPage((prev) => prev + 1);
-    }
-  };
+  useEffect(() => {
+    return () => {
+      dispatch(channelReset());
+    };
+  }, [dispatch,username,userData]);
+
 
   useEffect(() => {
     const fetchChannelOwner = async () => {
@@ -44,7 +38,6 @@ function ChannelPage() {
         const response = await getUserChannelProfileAPI(username!);
         console.log(response);
         dispatch(updateUser(response));
-        setChannelOwnerId(response._id);
         if(response.isSubscribed) {
           dispatch(toggleSubscription());
         }
@@ -59,36 +52,6 @@ function ChannelPage() {
     fetchChannelOwner();
   }, [username, dispatch]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(channelReset());
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (channelOwnerId) {
-      const fetchChannelVideos = async () => {
-        try {
-          const channelVideos = await getAllVideosAPI({
-            userId: channelOwnerId,
-            page,
-            sortBy: "createdAt",
-            sortType: "asc",
-          });
-          dispatch(updateVideos(channelVideos));
-        } catch (err) {
-          console.error(err);
-        }
-      };
-
-      fetchChannelVideos();
-    }
-  }, [channelOwnerId, page, dispatch]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleInfiniteScroll);
-    return () => window.removeEventListener("scroll", handleInfiniteScroll);
-  }, []);
 
   if(!userData) {
     return null;

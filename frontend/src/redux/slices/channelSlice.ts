@@ -35,11 +35,10 @@ export const channelSlice = createSlice({
       state.userData = action.payload;
     },
     updateVideos: (state, action) => {
-      state.channelVideos = [...state.channelVideos, ...action.payload];
+      state.channelVideos = action.payload;
     },
     toggleSubscription: (state) => {
       state.isSubscribed = !state.isSubscribed;
-      console.log("New state:", state.isSubscribed);
     },
     toggleEdit: (state) => {
       state.isEditing = !state.isEditing;
@@ -56,8 +55,8 @@ export const channelSlice = createSlice({
     updateemail: (state, action) => {
       state.userData.email = action.payload
     },
-    resetVideos: (state) => {
-      state.channelVideos = [];
+    resetChannelVideos: (state) => {
+      state.channelVideos = []
     },
     reset: (state) => {
       state.userData = {
@@ -87,8 +86,8 @@ export const {
   updateAvatar,
   updatefullname,
   updateemail,
-  reset,
-  resetVideos
+  resetChannelVideos,
+  reset
 } = channelSlice.actions;
 
 export default channelSlice.reducer;
