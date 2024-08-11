@@ -56,6 +56,9 @@ export const channelSlice = createSlice({
     updateemail: (state, action) => {
       state.userData.email = action.payload
     },
+    resetVideos: (state) => {
+      state.channelVideos = [];
+    },
     reset: (state) => {
       state.userData = {
         _id: "",
@@ -85,6 +88,7 @@ export const {
   updatefullname,
   updateemail,
   reset,
+  resetVideos
 } = channelSlice.actions;
 
 export default channelSlice.reducer;
