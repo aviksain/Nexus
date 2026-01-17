@@ -3,25 +3,11 @@ import ReactPlayer from "react-player";
 import { useParams } from "react-router-dom";
 import { getVideoByIdAPI } from "../api/videos";
 import { NavbarContainer } from ".";
-import {
-  Body,
-  LoadingComp,
-  SideBar,
-  SuggestedVideos,
-  VideoComments,
-  VideoDetails,
-} from "../components";
+import { Body, LoadingComp, SideBar, SuggestedVideos, VideoComments, VideoDetails } from "../components";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  reset as resetVideoDetails,
-  toggleSubscription,
-  updateVideo,
-} from "../redux/slices/videosSlice";
-import {
-  updateComment,
-  reset as resetVideoComments,
-} from "../redux/slices/commentSlice";
+import { reset as resetVideoDetails, toggleSubscription, updateVideo } from "../redux/slices/videosSlice";
+import { updateComment, reset as resetVideoComments } from "../redux/slices/commentSlice";
 import { getVideoCommentsAPI } from "../api/comment";
 
 function VideoPlayPage() {
@@ -73,7 +59,7 @@ function VideoPlayPage() {
                 <div className="relative mb-4 w-full  pt-[56%]">
                   <div className="absolute inset-0 ">
                     <ReactPlayer
-                      url={video.videoFile}
+                      url={video.videoHlsUrl ?? video.videoFile}
                       height={"100%"}
                       width={"100%"}
                       controls={true}
@@ -83,6 +69,7 @@ function VideoPlayPage() {
                       light={video.thumbnail} // Use the thumbnail as a placeholder image
                       config={{
                         file: {
+                          forceHLS: true,
                           attributes: {
                             crossOrigin: "anonymous",
                           },

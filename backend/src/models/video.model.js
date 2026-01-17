@@ -7,6 +7,14 @@ storing the
 */
 
 const schemaObj = {
+  videoPublicId: {
+    type: String, // cloudinary public_id for video (used for delete + HLS generation)
+    required: true,
+  },
+  videoHlsUrl: {
+    type: String, // .m3u8 url
+    default: null,
+  },
   videoFile: {
     type: "string", // cloudinary-url
     required: true
@@ -14,6 +22,10 @@ const schemaObj = {
   thumbnail: {
     type: "string", // cloudinary-url
     required: true
+  },
+  thumbnailPublicId: {
+    type: String, // cloudinary public_id for thumbnail
+    required: true,
   },
   title: {
     type: "string", 
