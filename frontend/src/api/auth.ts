@@ -4,6 +4,8 @@ import axiosInstance from "../utils/axiosInstance";
 const registerAPI = async (data: any) => {
   try {
     const formData = new FormData();
+    console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
 
     formData.append("fullname", data.fullname);
     formData.append("email", data.email);
@@ -45,6 +47,7 @@ const loginAPI = async (data: any) => {
     return response.data.data.user;
   } catch (err) {
     console.log("API :: Login :: Error :: ", err);
+    throw err;
   }
 };
 

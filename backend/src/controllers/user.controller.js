@@ -137,8 +137,11 @@ const loginUser = asyncHandler(async (req, res) => {
   const isPasswordVaild = await user.isPasswordCorrect(password);
 
   if (!isPasswordVaild) {
+    console.log("Password Invalid")
     throw new ApiError(401, "Invalid user credentials");
   }
+
+  // console.log("Password Invalid")
 
   const { accessToken, refreshToken } = await generateAccessAndRefereshTokens(
     user._id

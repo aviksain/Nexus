@@ -8,6 +8,7 @@ import { loginAPI } from "../api/auth";
 import {NavbarContainer} from ".";
 import { createConfetti } from "../utils/confetti";
 import { LoaderCircle } from "lucide-react";
+import toast from "react-hot-toast";
 
 type formData = {
   identifier: string;
@@ -36,17 +37,23 @@ function Login() {
     setLoading(true);
     try {
       const response = await loginAPI(data);
+      console.log("Response :: ",response);
+
+      if(!response) return;
+
       dispatch(saveUserData(response));
       navigate('/');
-      createConfetti();
-      console.log(response);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
     }
     finally {
       setLoading(false);
     }
   };
+
+  console.log("Backend URL:", import.meta.env.VITE_BACKEND_URL);
+
 
   return (
     <>

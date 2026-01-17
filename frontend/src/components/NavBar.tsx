@@ -19,6 +19,8 @@ import { useState } from "react";
 import { RootState } from "../redux/store.ts";
 
 function Header() {
+  const isLogedIn = useSelector((state: RootState) => state.auth.status);
+
   const userData = useSelector((state: RootState) => state.auth.userData);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,7 +42,7 @@ function Header() {
             </Link>
           </div>
           <button className="relative mx-auto hidden w-full max-w-md overflow-hidden sm:block">
-            <SearchBar />
+            {isLogedIn && <SearchBar />}
           </button>
           <button className="ml-auto sm:hidden" onClick={() => setShow(!show)}>
             <Search />

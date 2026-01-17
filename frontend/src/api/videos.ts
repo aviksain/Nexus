@@ -24,7 +24,7 @@ const getAllVideosAPI = async ({
       params,
     });
 
-    return response.data.data.docs;
+    return response?.data?.data?.docs;
   } catch (error) {
     console.error("Error fetching videos:", error);
     throw error;
