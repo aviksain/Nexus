@@ -6,7 +6,6 @@ import { useDispatch } from "react-redux";
 import { saveUserData } from "../redux/slices/authSlice";
 import { loginAPI } from "../api/auth";
 import {NavbarContainer} from ".";
-import { createConfetti } from "../utils/confetti";
 import { LoaderCircle } from "lucide-react";
 import toast from "react-hot-toast";
 
